@@ -14,7 +14,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Extract data from text
 def translate(input, from_language, to_language):
-    template = """As a translation expert, translate from {from_language} to {to_language}: {sentence}
+    template = """As a translation specialist, without ignoring indecent words in order to not lose the context translate from {from_language} to {to_language}: {sentence}
         """
     prompt_template = PromptTemplate(input_variables=["sentence", "from_language", "to_language"], template=template)
     llm = OpenAI(temperature=.7)
@@ -33,6 +33,7 @@ def main():
         "Choose which language needs to be translated",
         (languages)
     )
+    
     option_to = st.selectbox(
         "Choose which language to translate into",
         (languages)
@@ -42,11 +43,10 @@ def main():
     
     if prompt:
         st.divider()
-        st.write(annotated_text("Searching for: ",(prompt, "", "#8ef")))
+        annotated_text("Searching for: ",(prompt, "", "#8ef"))
         st.divider()
         response = translate(prompt, option_from, option_to)
-        st.write(annotated_text("The answer is: ",(response, "", "#8ef")))     
-        
+        annotated_text("The answer is: ",(response, "", "#8ef"))
    
     
 
